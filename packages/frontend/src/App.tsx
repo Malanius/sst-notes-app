@@ -1,9 +1,10 @@
+import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 
-import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import Routes from "./Routes.tsx";
 import { AppContext, AppContextType } from "./lib/contextLib";
@@ -11,6 +12,7 @@ import { AppContext, AppContextType } from "./lib/contextLib";
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const nav = useNavigate();
 
   useEffect(() => {
     onLoad();
@@ -31,8 +33,8 @@ function App() {
 
   async function handleLogout() {
     await Auth.signOut();
-
     userHasAuthenticated(false);
+    nav("/login");
   }
 
   return (
