@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./App.css";
 import Routes from "./Routes.tsx";
 import { AppContext, AppContextType } from "./lib/contextLib";
+import { onError } from "./lib/errorLib.ts";
 
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -22,9 +23,9 @@ function App() {
     try {
       await Auth.currentSession();
       userHasAuthenticated(true);
-    } catch (e) {
-      if (e !== "No current user") {
-        alert(e);
+    } catch (error) {
+      if (error !== "No current user") {
+        onError(error);
       }
     }
 

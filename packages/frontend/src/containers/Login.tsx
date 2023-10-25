@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../lib/contextLib";
+import { onError } from "../lib/errorLib";
 import "./Login.css";
 
 export default function Login() {
@@ -30,11 +31,7 @@ export default function Login() {
       userHasAuthenticated(true);
       nav("/");
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert(String(error));
-      }
+      onError(error);
       setIsLoading(false);
     }
   }
